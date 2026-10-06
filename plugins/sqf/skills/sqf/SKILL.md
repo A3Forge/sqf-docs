@@ -19,7 +19,7 @@ SQF выглядит простым, но у него неочевидная с�
 | Позиции, векторы, время, случайность | [reference/positions-and-time.md](reference/positions-and-time.md) |
 | UI: диалоги, контролы, HTML-интерфейсы (`ctrlWebBrowser`, A3API) | [reference/ui.md](reference/ui.md) |
 | Проверенные паттерны: запрос клиент→сервер, server-only мод, HandleDamage, UI EH, константы | [reference/patterns.md](reference/patterns.md) |
-| extDB3 / MySQL: подключение, SQL_CUSTOM .ini, экранирование кавычек, LONGTEXT | [reference/extdb3.md](reference/extdb3.md) |
+| extDB3 / MySQL: установка, conf, системные команды `9:`, режимы вызова, SQL_CUSTOM .ini и опции, кавычки, дата/время, LONGTEXT | [reference/extdb3.md](reference/extdb3.md) |
 
 ## Документация (BIKI)
 
@@ -116,10 +116,12 @@ SQF выглядит простым, но у него неочевидная с�
     (смысл и единицы) и используй макрос. Встретил такое значение в коде, который
     правишь, — вынеси и замени все вхождения. Сначала найди существующий `.hpp` с
     макросами в проекте и следуй его стилю. См. patterns.md, раздел 6.
-21. **extDB3: кавычки в тексте из БД экранируй в SQL.** Для `N-STRING` extDB3 не
-    экранирует `"` внутри значения — пользовательский текст в SELECT оборачивай в
-    `REPLACE(col, '"', '""')`, иначе ломается `parseSimpleArray` всего ответа.
-    `:` во входах ломает разбор аргументов. Подробности — extdb3.md.
+21. **extDB3: кавычки в тексте из БД экранируй.** Для `N-STRING` extDB3 сам не
+    экранирует `"` внутри значения — пользовательский текст отдавай как
+    `N-STRING-add_escape_quotes` (или `REPLACE(col, '"', '""')` в SELECT), иначе ломается
+    `parseSimpleArray` всего ответа. `:` во входах ломает разбор аргументов.
+    `Strip Chars` работает только для значений с опцией `strip`, `mysql_escape` — только
+    без prepared statement. Подробности — extdb3.md.
 
 ## Зависимости от модов
 
