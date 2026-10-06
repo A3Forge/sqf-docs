@@ -1,0 +1,11 @@
+{
+  "name": "sqf",
+  "version": "1.0.0",
+  "description": "Arma 3 SQF rules: syntax pitfalls, scheduler, locality, remoteExec, performance, configs",
+  "author": {
+    "name": "A3Forge"
+  },
+  "repository": "https://github.com/A3Forge/sqf-docs",
+  "license": "MIT",
+  "keywords": ["arma3", "sqf", "bohemia", "scripting"]
+}

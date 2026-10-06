@@ -1,0 +1,14 @@
+{
+  "name": "sqf-docs",
+  "description": "Arma 3 SQF knowledge for AI coding agents",
+  "owner": {
+    "name": "A3Forge"
+  },
+  "plugins": [
+    {
+      "name": "sqf",
+      "source": "./plugins/sqf",
+      "description": "Arma 3 SQF rules: syntax pitfalls, scheduler, locality, remoteExec, performance, configs"
+    }
+  ]
+}
