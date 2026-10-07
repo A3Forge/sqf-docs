@@ -305,12 +305,28 @@ if (_player distance _box > WAREHOUSE_USE_DISTANCE) exitWith {};
 ## 7. Мелочи
 
 - Имена классов для сравнения: `toLowerANSI typeOf _veh` (быстрее `toLower`, для ASCII достаточно).
+- Отображаемое имя объекта — через `BIS_fnc_displayName`, а не ручным чтением конфига:
+  ```sqf
+  // ПЛОХО: путь к CfgVehicles зашит, для оружия/магазинов/предметов вернёт ""
+  getText (configFile >> "CfgVehicles" >> _className >> "displayName");
+
+  // ХОРОШО
+  [configOf player] call BIS_fnc_displayName;
+  ```
 - `isNotEqualTo` вместо `!(a isEqualTo b)`.
 - Текст игрока в structured text экранируй:
   `_s regexReplace ["&/g", "&amp;"] regexReplace ["</g", "&lt;"] regexReplace [">/g", "&gt;"]`.
 - Объект на точной позиции: `createVehicle [_type, [0,0,0], [], 0, "CAN_COLLIDE"]`,
   потом `setPosASL` и `setVectorDirAndUp [[sin _dir, cos _dir, 0], [0,0,1]]`.
   Для статики — `enableSimulationGlobal false`.
+- Техника, созданная `createVehicle`, появляется со стандартным грузом из конфига
+  (оружие, магазины, аптечки, рюкзаки). Если содержимое не нужно — сразу очищай:
+  ```sqf
+  clearWeaponCargoGlobal _vehicle;
+  clearMagazineCargoGlobal _vehicle;
+  clearItemCargoGlobal _vehicle;
+  clearBackpackCargoGlobal _vehicle;
+  ```
 - Список объектов в публичной переменной: перед добавлением фильтруй мёртвых
   (`select {alive _x}`), рассылай одним `setVariable [.., true]`.
 - Логи важных действий игроков пиши на сервере с именем и `getPlayerUID`.
