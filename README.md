@@ -48,6 +48,7 @@ plugins/sqf/skills/sqf/reference/        подробности по темам,
     ui.md                                диалоги, контролы, ctrlWebBrowser / A3API
     patterns.md                          проверенные паттерны с боевого MP-сервера
     extdb3.md                            extDB3 / MySQL: SQL_CUSTOM, экранирование, LONGTEXT
+    testing.md                           тесты в превью Eden: перезапуск, экран смерти, дебрифинг
 ```
 
 ## Как дополнять

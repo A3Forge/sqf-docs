@@ -20,6 +20,7 @@ SQF выглядит простым, но у него неочевидная с�
 | UI: диалоги, контролы, HTML-интерфейсы (`ctrlWebBrowser`, A3API) | [reference/ui.md](reference/ui.md) |
 | Проверенные паттерны: запрос клиент→сервер, server-only мод, HandleDamage, UI EH, константы | [reference/patterns.md](reference/patterns.md) |
 | extDB3 / MySQL: установка, conf, системные команды `9:`, режимы вызова, SQL_CUSTOM .ini и опции, кавычки, дата/время, LONGTEXT | [reference/extdb3.md](reference/extdb3.md) |
+| Тестирование в превью Eden: перезапуск миссии, экран смерти, дебрифинг, правки функций | [reference/testing.md](reference/testing.md) |
 
 ## Документация (BIKI)
 
