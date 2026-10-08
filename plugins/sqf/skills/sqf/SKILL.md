@@ -1,6 +1,6 @@
 ---
 name: sqf
-description: Правила и подводные камни скриптинга Arma 3 на SQF. Использовать всегда, когда читаешь, пишешь, ревьюишь или отлаживаешь SQF (.sqf), конфиги Arma 3 (description.ext, config.cpp, .hpp), скрипты миссий и модов, CfgFunctions, remoteExec, мультиплеерную локальность или UI. Keywords - Arma 3, SQF, BIS, CBA, mission scripting.
+description: Правила и подводные камни скриптинга Arma 3 на SQF. Использовать всегда, когда читаешь, пишешь, ревьюишь или отлаживаешь SQF (.sqf), конфиги Arma 3 (description.ext, config.cpp, .hpp), скрипты миссий и модов, CfgFunctions, remoteExec, мультиплеерную локальность или UI, а также когда выполняешь код в запущенной игре (debug console, MCP sqf-mcp / execute_sqf) и управляешь ею: меню, редактор Eden, запуск миссий и превью. Keywords - Arma 3, SQF, BIS, CBA, mission scripting, Eden, execute_sqf.
 paths: "**/*.sqf,**/*.sqm,**/*.ext,**/*.hpp,**/*.cpp,**/*.inc,**/stringtable.xml"
 ---
 
@@ -21,6 +21,7 @@ SQF выглядит простым, но у него неочевидная с�
 | Проверенные паттерны: запрос клиент→сервер, server-only мод, HandleDamage, UI EH, константы | [reference/patterns.md](reference/patterns.md) |
 | extDB3 / MySQL: установка, conf, системные команды `9:`, режимы вызова, SQL_CUSTOM .ini и опции, кавычки, дата/время, LONGTEXT | [reference/extdb3.md](reference/extdb3.md) |
 | Тестирование в превью Eden: перезапуск миссии, экран смерти, дебрифинг, правки функций | [reference/testing.md](reference/testing.md) |
+| Управление игрой из SQF: кнопки меню, открыть редактор и миссию, превью, `playMission`, выход из миссии и игры, окна `RscMsgBox`; выполнение через MCP (sqf-mcp) | [reference/game-navigation.md](reference/game-navigation.md) |
 
 ## Документация (BIKI)
 
