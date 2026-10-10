@@ -167,6 +167,11 @@ waitUntil {sleep 0.5; _cond};              // последнее выражен�
   forceUnicode 0;              // Unicode до конца текущей области видимости (и внешней)
   forceUnicode -1;             // отменить
   ```
+  Проверено в игре: после `forceUnicode 1;` команды `[count _s, _s find "x", count _s]`
+  дают Unicode только для первой, после `forceUnicode 0;` — для всех трёх.
+  Поиск подстроки (`"пере" in _s`) находит кириллицу и без `forceUnicode`: меняются только
+  позиции и длины. Если считаешь позиции (`count`, `select`, `find`) в одном блоке —
+  ставь `forceUnicode 0;` в начале блока, чтобы все команды считали одинаково.
   `toLower`/`toUpper`, `ctrlSetText`, `getTextWidth` поддерживают Unicode сами.
   `toLowerANSI`/`toUpperANSI` — быстрее, но только для ASCII/ISO-8859-1 (имена классов, ключи).
 - Многократный `+` в цикле медленный; собирай в массив, потом `joinString`.
@@ -184,7 +189,9 @@ private _r = [1, 2] call TAG_fnc_add;      // 3 — значение после�
   (динамическая область видимости). Поэтому каждая локальная переменная должна быть
   `private` — иначе перезапишешь переменную вызывающего.
 - `compileFinal` делает код неизменяемым (нельзя потом перезаписать `TAG_fnc_x = {...}`);
-  CfgFunctions делает это автоматически.
+  CfgFunctions делает это автоматически. То же — `compileScript [_path, true]`.
+  Попытка перезаписать final-переменную (`uiNamespace setVariable ["TAG_fnc_x", {...}]`)
+  молча ничего не меняет. Проверка — `isFinal _code`.
 - `compile` не запускает препроцессор: никаких `#define` и комментариев. Используй
   `compileScript ["file.sqf"]` или `compile preprocessFileLineNumbers "file.sqf"`.
 
@@ -199,4 +206,14 @@ private _r = [1, 2] call TAG_fnc_add;      // 3 — значение после�
   «Данные на стороне клиента»).
 - `_obj setVariable ["TAG_name", _v]` — локально; `[..., true]` — рассылка всем (+ JIP).
   `_obj getVariable ["TAG_name", _default]` — всегда передавай значение по умолчанию.
+- **У `getVariable` нет проверки типа.** Значение по умолчанию подставляется, только если
+  переменной нет, а не если у неё другой тип. Форма с третьим элементом
+  `ns getVariable ["x", 0, [0]]` для пространств имён не фильтрует тип, а возвращает nil
+  (проверено на `uiNamespace`). Тип проверяй так:
+  ```sqf
+  private _n = [uiNamespace getVariable "TAG_attempts"] param [0, 0, [0]];      // не число → 0
+  private _on = (uiNamespace getVariable ["TAG_flag", false]) isEqualTo true;   // только true
+  ```
+  `param` и `isEqualTo` не выполняют подложенный код: `{...}` вместо числа просто даст
+  значение по умолчанию.
 - Имена переменных регистронезависимы (`_Unit` и `_unit` — одна переменная).

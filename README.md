@@ -50,6 +50,7 @@ plugins/sqf/skills/sqf/reference/        подробности по темам,
     extdb3.md                            extDB3 / MySQL: SQL_CUSTOM, экранирование, LONGTEXT
     testing.md                           тесты в превью Eden: перезапуск, экран смерти, дебрифинг
     game-navigation.md                   управление игрой из SQF: меню, редактор, миссии, выход; MCP (sqf-mcp)
+    ui-mods.md                           моды интерфейса: хуки ванильных окон, меню, RscMsgBox, переподключение
 ```
 
 ## Как дополнять

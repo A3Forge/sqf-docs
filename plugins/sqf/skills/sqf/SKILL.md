@@ -13,14 +13,15 @@ SQF выглядит простым, но у него неочевидная с�
 |---|---|
 | Синтаксис, приоритет операторов, типы, сравнения, массивы, hashmap | [reference/syntax-pitfalls.md](reference/syntax-pitfalls.md) |
 | Scheduled / unscheduled, `spawn`/`call`, циклы, тайминги, ошибки | [reference/scheduler.md](reference/scheduler.md) |
-| Мультиплеер: локальность, `remoteExec`, JIP, порядок инициализации, безопасность | [reference/multiplayer.md](reference/multiplayer.md) |
+| Мультиплеер: локальность, `remoteExec`, JIP, порядок инициализации, безопасность, смена миссии и рестарт, HTTP-зеркало миссий | [reference/multiplayer.md](reference/multiplayer.md) |
 | Производительность | [reference/performance.md](reference/performance.md) |
-| CfgFunctions, структура проекта, препроцессор, конфиги, stringtable | [reference/project-structure.md](reference/project-structure.md) |
+| CfgFunctions, структура проекта, препроцессор, конфиги, stringtable, сборка и подпись PBO | [reference/project-structure.md](reference/project-structure.md) |
 | Позиции, векторы, время, случайность | [reference/positions-and-time.md](reference/positions-and-time.md) |
 | UI: диалоги, контролы, HTML-интерфейсы (`ctrlWebBrowser`, A3API) | [reference/ui.md](reference/ui.md) |
 | Проверенные паттерны: запрос клиент→сервер, server-only мод, HandleDamage, UI EH, константы | [reference/patterns.md](reference/patterns.md) |
 | extDB3 / MySQL: установка, conf, системные команды `9:`, режимы вызова, SQL_CUSTOM .ini и опции, кавычки, дата/время, LONGTEXT | [reference/extdb3.md](reference/extdb3.md) |
 | Тестирование в превью Eden: перезапуск миссии, экран смерти, дебрифинг, правки функций | [reference/testing.md](reference/testing.md) |
+| Моды интерфейса: хуки ванильных окон (главное меню, дебрифинг, `RscMsgBox`), функции в `uiNamespace` через `preStart`, тик в меню без `spawn`, свои окна из контролов, клавиши, `connectToServer`, отслеживание выхода с сервера и переподключение | [reference/ui-mods.md](reference/ui-mods.md) |
 | Управление игрой из SQF: кнопки меню, открыть редактор и миссию, превью, `playMission`, выход из миссии и игры, окна `RscMsgBox`; выполнение через MCP (sqf-mcp) | [reference/game-navigation.md](reference/game-navigation.md) |
 
 ## Документация (BIKI)
@@ -95,7 +96,9 @@ SQF выглядит простым, но у него неочевидная с�
     `compile`, `execVM`, имена функций для вызова, обработчики событий), и не бери
     оттуда ничего, что влияет на права, деньги, роли или игровой баланс. Допустимо —
     простые флаги и настройки удобства (например «игрок уже согласился с правилами»,
-    громкость, последняя открытая вкладка), с проверкой типа при чтении.
+    громкость, последняя открытая вкладка), с проверкой типа при чтении: у `getVariable`
+    её нет, используй `[ns getVariable "x"] param [0, умолчание, [типы]]` или
+    `... isEqualTo true` для флагов (см. syntax-pitfalls.md).
     Правило — про **клиентские** машины: `uiNamespace` выделенного сервера игрок не
     контролирует, там можно хранить, например, имя протокола БД между миссиями.
     См. multiplayer.md, раздел «Данные на стороне клиента».

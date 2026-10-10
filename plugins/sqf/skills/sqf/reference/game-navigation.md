@@ -46,6 +46,8 @@
   // текст — _box displayCtrl 101; кнопки: 1 — «Да/ОК», 2 — «Нет/Отмена»
   ctrlActivate (_box displayCtrl 1);
   ```
+  Своя реакция на эти окна из мода (кик, потеря связи, автозакрытие) — через `onLoad`
+  класса `RscMsgBox` в конфиге, см. [ui-mods.md](ui-mods.md).
   Все зарегистрированные так дисплеи с именами классов:
   ```sqf
   (uiNamespace getVariable ["GUI_displays", []])
@@ -248,7 +250,21 @@ ctrlActivate ((findDisplay 0) displayCtrl 106);
 ### Диагностика
 
 - «Игра не забрала задание за 5s» — идёт загрузка, открыто модальное окно
-  (`RscMsgBox`) или игра висит. Подожди и повтори, сделай `screenshot`.
+  (`RscMsgBox`) или игра висит. Подожди и повтори, сделай `screenshot`. Окно сообщения,
+  которое не закрыть через MCP (опрос заданий стоит), можно закрыть кликом мыши средствами
+  ОС (WinAPI `SetCursorPos` + `mouse_event`) по кнопке.
+- Команды, которым нужно UI-событие и окно в фокусе (`connectToServer`), из `execute_sqf`
+  напрямую не срабатывают. Активируй окно игры (`WScript.Shell.AppActivate` по PID) и
+  выполни команду из одноразового `MouseMoving` дисплея 0:
+  ```sqf
+  (findDisplay 0) displayAddEventHandler ["MouseMoving", {
+      (_this select 0) displayRemoveEventHandler [_thisEvent, _thisEventHandler];
+      connectToServer ["127.0.0.1", 2302, ""];
+  }];
+  ```
+  Событие придёт, когда мышь пошевелится над окном игры.
+- Пересобранный мод с final-функциями (`preStart`/CfgFunctions) подменить в запущенной игре
+  нельзя: нужен перезапуск игры (см. ui-mods.md).
 - В RPT мод пишет `[sqf_mcp] MCP (client) listening on ...` при запуске и
   `[sqf_mcp] pump started: ...` при каждом (пере)запуске опроса заданий — в меню, в
   редакторе, в миссии. Нет этих строк — мод не загружен (BattlEye, не тот `-mod=`).
